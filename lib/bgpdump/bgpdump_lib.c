@@ -158,6 +158,10 @@ BGPDUMP_ENTRY *bgpdump_entry_create(BGPDUMP *dump)
   BGPDUMP_ENTRY *this_entry = malloc(sizeof(BGPDUMP_ENTRY));
   memset(this_entry, 0, sizeof(BGPDUMP_ENTRY));
   this_entry->dump = dump;
+
+  /* Initialize offset location of the record in dump file */
+  this_entry->offset = dump->offset;
+
   return this_entry;
 }
 
@@ -201,6 +205,9 @@ BGPDUMP_ENTRY *bgpdump_read_next(BGPDUMP *dump)
 
   dump->parsed++;
 
+  /* Update dump file offset after reading MRT header (1/2) */
+  dump->offset += bytes_read;
+
   /* Intel byte ordering stuff ... */
   this_entry->type = ntohs(this_entry->type);
   this_entry->subtype = ntohs(this_entry->subtype);
@@ -221,6 +228,9 @@ BGPDUMP_ENTRY *bgpdump_read_next(BGPDUMP *dump)
     dump->eof = 1;
     return (NULL);
   }
+
+  /* Update dump file offset after reading MRT entry (2/2) */
+  dump->offset += bytes_read;
 
   ok = 0;
   mstream_init(&s, buffer, this_entry->length);

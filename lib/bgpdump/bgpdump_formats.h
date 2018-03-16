@@ -232,6 +232,9 @@ typedef union union_BGPDUMP_BODY {
   BGPDUMP_ZEBRA_SNAPSHOT zebra_snapshot;
 } BGPDUMP_BODY;
 
+/* Type definition for offset in a file. */
+typedef u_int64_t BGPDUMP_RECORD_OFFSET;
+
 /* The MRT header. Common to all records. */
 typedef struct struct_BGPDUMP_ENTRY {
   time_t time;
@@ -240,6 +243,7 @@ typedef struct struct_BGPDUMP_ENTRY {
   u_int32_t length;
   attributes_t *attr;
   BGPDUMP_BODY body;
+  BGPDUMP_RECORD_OFFSET offset;
   // link to the current bgpdump structure, or NULL
   struct struct_BGPDUMP *dump;
 } BGPDUMP_ENTRY;
