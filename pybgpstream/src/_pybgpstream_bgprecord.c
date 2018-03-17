@@ -160,6 +160,13 @@ static PyObject *BGPRecord_get_dump_position(BGPRecordObject *self,
   return NULL;
 }
 
+/* get record offset */
+static PyObject *BGPRecord_get_record_offset(BGPRecordObject *self,
+                                             void *closure)
+{
+    return Py_BuildValue("l", self->rec->offset);
+}
+
 /* get next elem */
 static PyObject *BGPRecord_get_next_elem(BGPRecordObject *self)
 {
@@ -208,6 +215,10 @@ static PyGetSetDef BGPRecord_getsetters[] = {
 
   /* attributes.dump_position */
   {"dump_position", (getter)BGPRecord_get_dump_position, NULL, "Dump Position",
+   NULL},
+
+  /* offset */
+  {"offset", (getter)BGPRecord_get_record_offset, NULL, "Record Offset",
    NULL},
 
   {NULL} /* Sentinel */
