@@ -359,6 +359,10 @@ bgpstream_reader_export_record(bgpstream_reader_t *const bs_reader,
   // read bgpstream_reader field and copy them to a bs_record
   bgpstream_debug("\t\tBSR: export record: copying bd_entry");
   bs_record->bd_entry = bs_reader->bd_entry;
+  // copy record offset from entry to record
+  if(bs_record->bd_entry != NULL) {
+    bs_record->offset = bs_record->bd_entry->offset;
+  }
   // disconnect reader from exported entry
   bs_reader->bd_entry = NULL;
   // memset(bs_record->attributes.dump_project, 0, BGPSTREAM_PAR_MAX_LEN);

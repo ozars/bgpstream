@@ -136,6 +136,10 @@ typedef struct struct_bgpstream_record_attributes_t {
 
 } bgpstream_record_attributes_t;
 
+/** Record offset type. Couldn't typedef BGPDUMP_RECORD_OFFSET due to changes
+    required for Makefiles and/or included libraries. */
+typedef uint64_t bgpstream_record_offset_t;
+
 /** Record structure */
 typedef struct struct_bgpstream_record_t {
 
@@ -156,6 +160,9 @@ typedef struct struct_bgpstream_record_t {
 
   /** Position of this record in the dump */
   bgpstream_dump_position_t dump_pos;
+
+  /** Offset of the record in the data source */
+  bgpstream_record_offset_t offset;
 
 } bgpstream_record_t;
 
